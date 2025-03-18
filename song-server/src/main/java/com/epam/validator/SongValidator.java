@@ -20,32 +20,38 @@ public class SongValidator {
     public void validate(SongDto song) {
         Map<String, String> details = new HashMap<>();
         if (song.name() == null || song.name().isBlank()) {
-            details.put("name", "Name must not be null or blank");
+            details.put("name", "Song name is required");
         }
-        if (!song.year().matches(YEAR_REGEX)) {
-            details.put("year", "Year must be between 1900 and 2099 and must not start with a leading zero");
+        if (song.artist() == null || song.artist().isBlank()) {
+            details.put("artist", "Artist is required");
         }
-        if (!song.duration().matches(DURATION_REGEX)) {
-            details.put("duration", "Duration must be in the format mm:ss and valid");
+        if (song.album() == null || song.album().isBlank()) {
+            details.put("album", "Album is required");
+        }
+        if (song.year() == null || !song.year().matches(YEAR_REGEX)) {
+            details.put("year", "Year must be in a YYYY format");
+        }
+        if (song.duration() == null || !song.duration().matches(DURATION_REGEX)) {
+            details.put("duration", "Duration must be in the format MM:SS");
         }
         if (!details.isEmpty()) {
-            throw new InvalidSongDataException("Invalid song data", details);
+            throw new InvalidSongDataException("Validation error", details);
         }
     }
 
     public void validateString(String value, Integer maxLength) {
         if (value == null || value.isEmpty()) {
-            throw new InvalidSongDataException("Value cannot be null or empty", null);
+            throw new InvalidSongDataException("CSV string cannot be null or empty", null);
         }
         if (value.length() > maxLength) {
             throw new InvalidSongDataException(
-                    MessageFormat.format("Value length: {0} exceeds maximum length of: {1}", value.length(), maxLength), null);
+                    String.format("CSV string is too long: received %s characters, maximum allowed is %s", value.length(), maxLength), null);
         }
     }
 
     public void validateId(Integer id) {
         if (id == null || id <= 0) {
-            throw new InvalidSongDataException("Song id should be positive", null);
+            throw new InvalidSongDataException(String.format("Invalid ID format: '%s'. Only positive integers are allowed", id), null);
         }
     }
 

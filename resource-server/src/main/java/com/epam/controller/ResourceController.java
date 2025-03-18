@@ -3,11 +3,9 @@ package com.epam.controller;
 import com.epam.dto.DeleteResponseDto;
 import com.epam.dto.UploadResponseDto;
 import com.epam.service.ResourceService;
-import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/resources")
-@Validated
 public class ResourceController {
 
     private final ResourceService resourceService;
@@ -30,7 +27,7 @@ public class ResourceController {
     }
 
     @GetMapping(value = "/{id}", produces = "audio/mpeg")
-    public ResponseEntity<byte[]> download(@PathVariable("id") @Positive Integer id) {
+    public ResponseEntity<byte[]> download(@PathVariable("id") Integer id) {
         byte[] response = resourceService.getFileById(id).getPayload();
         return new ResponseEntity<>(response, HttpStatus.OK);
 

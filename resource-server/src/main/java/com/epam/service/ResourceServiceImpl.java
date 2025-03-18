@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 @Service
 public class ResourceServiceImpl implements ResourceService {
 
-    private static final int MAX_ID_LENGTH = 199;
+    private static final int MAX_ID_LENGTH = 200;
 
     private static final String COMMA = ",";
 
@@ -57,9 +57,10 @@ public class ResourceServiceImpl implements ResourceService {
 
     @Override
     public ResourceEntity getFileById(Integer id) {
+        resourceValidator.validateId(id);
         return resourceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        MessageFormat.format("The resource with id {0} does not exist", String.valueOf(id))));
+                        MessageFormat.format("Resource with ID={0} not found", String.valueOf(id))));
     }
 
     @Override

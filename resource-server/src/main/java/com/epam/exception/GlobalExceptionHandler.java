@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 @ControllerAdvice
@@ -45,12 +48,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<ErrorResponse> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
-        return buildErrorResponse("Unsupported Media Type", null, "400", HttpStatus.BAD_REQUEST);
+        String invalidContentType = Optional.ofNullable(ex.getContentType())
+                .map(MediaType::toString)
+                .orElse("unknown");
+        String errorMessage = MessageFormat.format("Invalid file format: {0}. Only MP3 files are allowed", invalidContentType);
+        return buildErrorResponse(errorMessage, null, "400", HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
-        String errorMessage = String.format("Argument type mismatch for parameter '%s': %s", ex.getName(), ex.getValue());
+        String errorMessage = String.format("Invalid value '%s' for ID. Must be a positive integer", ex.getValue());
         return buildErrorResponse(errorMessage, null, "400", HttpStatus.BAD_REQUEST);
     }
 

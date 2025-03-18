@@ -1,7 +1,10 @@
 package com.epam.exception;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Map;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
     private String errorMessage;
     private Map<String, String> details;
