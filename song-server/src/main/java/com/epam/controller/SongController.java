@@ -1,6 +1,8 @@
 package com.epam.controller;
 
+import com.epam.dto.DeleteResponseDto;
 import com.epam.dto.SongDto;
+import com.epam.dto.UploadResponseDto;
 import com.epam.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/songs")
 public class SongController {
@@ -28,22 +28,20 @@ public class SongController {
     }
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<?> uploadSong(@RequestBody SongDto song) {
-        Integer id = songService.addSong(song);
-        return new ResponseEntity<>(id, HttpStatus.OK);
+    public ResponseEntity<UploadResponseDto> uploadSong(@RequestBody SongDto song) {
+        UploadResponseDto response = songService.addSong(song);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getSong(@PathVariable(name = "id") Integer id) {
-        return songService
-                .getSongById(id)
-                .map(song -> new ResponseEntity<>(song, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<SongDto> getSong(@PathVariable(name = "id") Integer id) {
+        SongDto response = songService.getSongById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteSong(@RequestParam(value = "id") String ids) {
-        List<Integer> deletedSongs = songService.deleteSongs(ids);
-        return new ResponseEntity<>(deletedSongs, HttpStatus.OK);
+    public ResponseEntity<DeleteResponseDto> deleteSong(@RequestParam(value = "id") String ids) {
+        DeleteResponseDto response = songService.deleteSongs(ids);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

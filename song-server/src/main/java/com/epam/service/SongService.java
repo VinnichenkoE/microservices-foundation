@@ -1,15 +1,14 @@
 package com.epam.service;
 
+import com.epam.dto.DeleteResponseDto;
 import com.epam.dto.SongDto;
-
-import java.util.List;
-import java.util.Optional;
+import com.epam.dto.UploadResponseDto;
 
 public interface SongService {
 
-    Integer addSong(SongDto song);
+    UploadResponseDto addSong(SongDto song);
 
-    Optional<SongDto> getSongById(Integer id);
+    SongDto getSongById(Integer id);
 
-    List<Integer> deleteSongs(String ids);
+    DeleteResponseDto deleteSongs(String ids);
 }

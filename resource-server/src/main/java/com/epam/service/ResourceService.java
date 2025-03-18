@@ -1,15 +1,14 @@
 package com.epam.service;
 
 import com.epam.db.entity.ResourceEntity;
-
-import java.util.List;
-import java.util.Optional;
+import com.epam.dto.DeleteResponseDto;
+import com.epam.dto.UploadResponseDto;
 
 public interface ResourceService {
 
-    Integer addFile(byte[] payload);
+    UploadResponseDto addFile(byte[] payload);
 
-    Optional<ResourceEntity> getFileById(Integer id);
+    ResourceEntity getFileById(Integer id);
 
-    List<Integer> deleteFiles(String ids);
+    DeleteResponseDto deleteFiles(String ids);
 }
