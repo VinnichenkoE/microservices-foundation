@@ -4,12 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.epam</groupId>
-        <artifactId>microservices-foundation</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.3</version>
+        <relativePath/>
     </parent>
 
     <artifactId>song-server</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>song-server</name>
+    <description>Song Server Project</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
