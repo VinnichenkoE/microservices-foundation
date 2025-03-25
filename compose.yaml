@@ -27,6 +27,7 @@ services:
 
   resource-db:
     image: 'postgres:17-alpine'
+    container_name: 'resource-db'
     ports:
       - '5434:5432'
     environment:
@@ -38,6 +39,7 @@ services:
 
   song-db:
     image: 'postgres:17-alpine'
+    container_name: 'song-db'
     ports:
       - '5435:5432'
     environment:
