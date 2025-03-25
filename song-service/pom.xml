@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
 
-    <artifactId>song-server</artifactId>
+    <artifactId>song-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>song-server</name>
     <description>Song Server Project</description>

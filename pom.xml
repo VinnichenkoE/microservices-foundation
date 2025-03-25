@@ -11,8 +11,8 @@
     <description>Microservices foundation project</description>
 
     <modules>
-        <module>resource-server</module>
-        <module>song-server</module>
+        <module>resource-service</module>
+        <module>song-service</module>
     </modules>
 
 </project>

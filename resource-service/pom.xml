@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
 
-    <artifactId>resource-server</artifactId>
+    <artifactId>resource-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>resource-server</name>
     <description>Resource Server Project</description>
