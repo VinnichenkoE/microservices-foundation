@@ -12,11 +12,11 @@ public class SongIntegrationServiceImpl implements SongIntegrationService {
     @Value("${song.service.url}")
     private String songServiceUrl;
 
-    private final WebClient webClient;
+    private final WebClient.Builder loadBalancedWebClientBuilder;
 
     @Autowired
-    public SongIntegrationServiceImpl(WebClient webClient) {
-        this.webClient = webClient;
+    public SongIntegrationServiceImpl(WebClient.Builder loadBalancedWebClientBuilder) {
+        this.loadBalancedWebClientBuilder = loadBalancedWebClientBuilder;
     }
 
     @Override
@@ -27,6 +27,8 @@ public class SongIntegrationServiceImpl implements SongIntegrationService {
                 .build()
                 .toString();
 
+        WebClient webClient = loadBalancedWebClientBuilder.build();
+
         webClient
                 .post()
                 .uri(url)
@@ -34,7 +36,6 @@ public class SongIntegrationServiceImpl implements SongIntegrationService {
                 .retrieve()
                 .bodyToMono(Void.class)
                 .block();
-
     }
 
     @Override
@@ -45,6 +46,8 @@ public class SongIntegrationServiceImpl implements SongIntegrationService {
                 .queryParam("id", ids)
                 .build()
                 .toString();
+
+        WebClient webClient = loadBalancedWebClientBuilder.build();
 
         webClient
                 .delete()

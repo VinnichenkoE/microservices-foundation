@@ -1,6 +1,7 @@
 package com.epam.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
@@ -14,11 +15,10 @@ public class AppConfig {
     private String songServiceUrl;
 
     @Bean
-    public WebClient webClient() {
+    @LoadBalanced
+    public WebClient.Builder loadBalancedWebClientBuilder() {
         HttpClient httpClient = HttpClient.create();
-
         return WebClient.builder()
-                .clientConnector(new ReactorClientHttpConnector(httpClient))
-                .build();
+                .clientConnector(new ReactorClientHttpConnector(httpClient));
     }
 }
